@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import Board from '../Board'
+import SelectionBoard from '../SelectionBoard'
 import './index.css'
+import BattleField from '../BattleField'
 
 
 const Landing = () => {
@@ -10,16 +11,10 @@ const Landing = () => {
     const [playerOne, setPlayerOne] = useState('')
     const [playerTwo, setPlayerTwo] = useState('')
 
-    const playerOneStorage = () => {
+    const playerStorage = (key,value) => {
         setStep(step + 1)
-        localStorage.setItem('playerOne', playerOne)
+        localStorage.setItem(key, value)
     }
-
-    const playerTwoStorage = () => {
-        setStep(step + 1)
-        localStorage.setItem('playerTwo', playerTwo)
-    }
-
 
     return (
         <div className='step-container'>
@@ -27,16 +22,28 @@ const Landing = () => {
             {step === 1 &&
                 <>
                     <h1>Please Enter For Player1 Name</h1>
-                    <input type="text" value={playerOne} onChange={(e) => setPlayerOne(e.target.value)} placeholder='Enter Name'></input> <br></br>
-                    {playerOne !== '' && <button onClick={playerOneStorage}>
+                    <input type="text"
+                        value={playerOne}
+                        onKeyDown={(e) => e.key === 'Enter' && playerStorage('playerOne' , playerOne)}
+                        onChange={(e) => setPlayerOne(e.target.value)}
+                        placeholder='Enter Name'>
+                    </input> <br></br>
+
+                    {playerOne !== '' && <button onClick={() => playerStorage('playerOne' , playerOne)}>
                         &#10132;</button>}
                 </>}
 
             {step === 2 &&
                 <>
                     <h1>Please Enter For Player2 Name</h1>
-                    <input type="text" value={playerTwo} onChange={(e) => setPlayerTwo(e.target.value)} placeholder='Enter Name'></input> <br></br>
-                    {playerTwo !== '' && <button onClick={playerTwoStorage}>
+                    <input type="text"
+                        value={playerTwo}
+                        onKeyDown={(e) => e.key === 'Enter' && playerStorage('playerTwo' , playerTwo)}
+                        onChange={(e) => setPlayerTwo(e.target.value)}
+                        placeholder='Enter Name'>
+                    </input> <br></br>
+
+                    {playerTwo !== '' && <button onClick={() => playerStorage('playerTwo' , playerTwo)}>
                         &#10132;</button>}
 
                 </>}
@@ -50,17 +57,23 @@ const Landing = () => {
 
 
             {step === 4 &&
-                <> <h1>{localStorage.getItem('playerOne')}'s Battle Grid</h1>
-                    <Board playerKey={'playerOneShips'} step={step} setStep={setStep} />
+                <div className="step-four">
+                    <h1>{localStorage.getItem('playerOne')}'s Selection Grid</h1>
+                    <SelectionBoard playerKey={'playerOneShips'} step={step} setStep={setStep} />
 
-                </>
+                </div>
 
             }
 
             {step === 5 &&
-                <> <h1>{localStorage.getItem('playerTwo')}'s Battle Grid</h1>
-                    <Board playerKey={'playerTwoShips'} step={step} setStep={setStep} />
-                </>
+                <div className="step-five">
+                    <h1>{localStorage.getItem('playerTwo')}'s Selection Grid</h1>
+                    <SelectionBoard playerKey={'playerTwoShips'} step={step} setStep={setStep} />
+                </div>
+            }
+
+            {step === 6 &&
+                <BattleField />      
             }
 
 
