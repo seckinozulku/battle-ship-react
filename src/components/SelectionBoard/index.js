@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import './index.css'
+import { useDispatch } from 'react-redux'
+import { setPlayerOneShips , setPlayerTwoShips } from '../../Redux/slice'
 
 const SHIPS = [
   { name: "Carries", size: 5, apply: false },
@@ -13,6 +15,8 @@ const ROWS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const COLUMNS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const SelectionBoard = ({ playerKey, step, setStep }) => {
+
+  const dispatch = useDispatch();
 
   const [ships, setShips] = useState(SHIPS); //Elimizdeki Gemilerin Datasını State'te tutuyoruz.
   const [selectedShip, setSelectedShip] = useState(null); //Kullanıcı Listeden Seçtiği Gemi.
@@ -100,7 +104,11 @@ const SelectionBoard = ({ playerKey, step, setStep }) => {
     const isAllSelected = ships.every((item) => item.apply === true);
 
     if (isAllSelected) { // Tüm değerler kullanıldıysa storage'e kaydeder.
-      localStorage.setItem(playerKey, JSON.stringify(colored))
+      if(playerKey === 'playerOneShips') {
+       dispatch(setPlayerOneShips(colored)) ;
+      }else {
+        dispatch(setPlayerTwoShips(colored));
+      }
     }
 
   }, [ships]);

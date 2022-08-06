@@ -1,22 +1,32 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import BattleBoard from '../BattleBoard'
+import { useSelector } from 'react-redux'
 
 const BattleField = () => {
 
-    const [turn , setTurn] = useState(true)
+  const { playerOneShips, playerTwoShips , playerOne , playerTwo , hits } = useSelector(state => state.battleShip)
+  const {playerOneHits , playerTwoHits} = hits
 
+  const [turn, setTurn] = useState(true)
 
-    const playerOneShips = JSON.parse(localStorage.getItem('playerOneShips'))
-    const playerTwoShips = JSON.parse(localStorage.getItem('playerTwoShips'))
+  console.log(playerOneHits,playerTwoHits)
 
   return (
     <div>
-        {turn &&
-        <BattleBoard label={'playerOneHits'} ships={playerTwoShips} turn={turn} setTurn={setTurn}/>
-        }
-        {!turn &&
-        <BattleBoard label={'playerTwoHits'} ships={playerOneShips} turn={turn} setTurn={setTurn}/>
-        }
+
+      {turn &&
+        <>
+          <h1>{playerTwo} Hits Now!</h1>
+          <BattleBoard label={'playerTwoHits'} ships={playerOneShips} turn={turn} setTurn={setTurn} />
+        </>
+      }
+
+      {!turn &&
+        <>
+          <h1>{playerOne} Hits Now!</h1>
+          <BattleBoard label={'playerOneHits'} ships={playerTwoShips} turn={turn} setTurn={setTurn} />
+        </>
+      }
     </div>
   )
 }

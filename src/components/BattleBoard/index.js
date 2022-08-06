@@ -1,30 +1,42 @@
 import { useState } from 'react'
+import { useDispatch , useSelector } from 'react-redux'
+import { setPlayerOneHits , setPlayerTwoHits } from '../../Redux/slice';
 
 const ROWS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const COLUMNS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const BattleBoard = ({ ships, label, turn, setTurn }) => {
+    const dispatch = useDispatch();
 
-    const [hits, setHits] = useState(JSON.parse(localStorage.getItem(label)) || {})
+    const { hits:selectedPlayerHits } = useSelector(state => state.battleShip)
+
+    const [hits, setHits] = useState( selectedPlayerHits[label] || {})
 
     const handleHit = (coord) => {
 
-        if (ships.includes(coord)) {
-            setHits({ ...hits, [coord]: true })
+        console.log(hits,hits[coord],!hits[coord])
 
-        } else {
-            setHits({ ...hits, [coord]: false })
-            localStorage.setItem(label, JSON.stringify({ ...hits, [coord]: false }))
-            setTimeout(() => {
-                setTurn(!turn)
-            }, 1000)
-        }
+        if(hits[coord] === undefined) { // Eğer hits'in içinde hit varsa bidaha vurmaz.
+            if (ships.includes(coord)) { // Eğer gemiyi koyduğumuz yerlerden birini vurduysak 
+                setHits({ ...hits, [coord]: true })
+    
+            } else {  // Eğer gemiyi koyduğumuz yerlerden birini vuramadıysak
+                setHits({ ...hits, [coord]: false })
+                if(label === 'playerOneHits'){
+                    dispatch(setPlayerOneHits({ ...hits, [coord]: false }))
+                }else {
+                    dispatch(setPlayerTwoHits({ ...hits, [coord]: false }))
+                }
+                
+                setTimeout(() => {
+                    setTurn(!turn)
+                }, 1000)
+            }
+        } 
     }
-
 
     return (
         <div style={{ display: 'inline-block' }}>
-            <h1>{label}</h1>
             {ROWS.map((row) => (
                 <div
                     key={row}
@@ -35,7 +47,7 @@ const BattleBoard = ({ ships, label, turn, setTurn }) => {
                     {COLUMNS.map((column) => {
 
                         return (
-                            <div
+                            <div                            
                                 style={{
                                     width: "50px",
                                     height: "50px",
