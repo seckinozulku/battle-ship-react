@@ -1,15 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BattleBoard from '../BattleBoard'
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch } from 'react-redux'
+import { setLogs  } from '../../Redux/slice';
 
 const BattleField = () => {
 
-  const { playerOneShips, playerTwoShips , playerOne , playerTwo , hits } = useSelector(state => state.battleShip)
-  const {playerOneHits , playerTwoHits} = hits
+  const dispatch = useDispatch();
+
+  const { playerOneShips, playerTwoShips, playerOne, playerTwo, hits, logs  } = useSelector(state => state.battleShip)
 
   const [turn, setTurn] = useState(true)
 
-  console.log(playerOneHits,playerTwoHits)
+  useEffect(() => {
+    if (turn) {
+      dispatch(setLogs([...logs, `${playerTwo}'s turn`]))
+    } else {
+      dispatch(setLogs([...logs, `${playerOne}'s turn`]))
+    }
+  }, [turn])
 
   return (
     <div>
@@ -27,6 +35,15 @@ const BattleField = () => {
           <BattleBoard label={'playerOneHits'} ships={playerTwoShips} turn={turn} setTurn={setTurn} />
         </>
       }
+      <h1>GameLog</h1>
+      <div style={{ overflowX: 'auto', width: '150px', height: '165px', margin: '15px auto', background: 'white' }}>
+        {
+          logs.map((log,index)=>{
+            return <p key={index}>{log}</p>
+          })
+        }
+      </div>
+
     </div>
   )
 }

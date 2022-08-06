@@ -8,7 +8,8 @@ const initialState = {
     hits: {
         playerOneHits: [],
         playerTwoHits: []
-    }
+    },
+    logs: []
 }
 
 export const battleShipSlice = createSlice({
@@ -32,10 +33,13 @@ export const battleShipSlice = createSlice({
         },
         setPlayerTwoHits: (state, action) => {
             state.hits.playerTwoHits = action.payload
+        },
+        setLogs: (state, action) => {         
+            state.logs = action.payload
         }
     }
 })
 
-export const { setPlayerOneName, setPlayerTwoName, setPlayerOneShips, setPlayerTwoShips, setPlayerOneHits, setPlayerTwoHits } = battleShipSlice.actions;
+export const { setPlayerOneName, setPlayerTwoName, setPlayerOneShips, setPlayerTwoShips, setPlayerOneHits, setPlayerTwoHits , setLogs } = battleShipSlice.actions;
 
 export default battleShipSlice.reducer;

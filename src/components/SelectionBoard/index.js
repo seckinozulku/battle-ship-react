@@ -70,7 +70,6 @@ const SelectionBoard = ({ playerKey, step, setStep }) => {
         setError(false);
       }, 300);
     }
-    console.log(colored, currentRow, currentColumn);
     if (
       selectedShip &&
       !currentColumn.includes(undefined) &&
