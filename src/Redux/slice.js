@@ -10,7 +10,7 @@ const initialState = {
         playerTwoHits: []
     },
     logs: []
-}
+};
 
 export const battleShipSlice = createSlice({
     name: 'battleShip',
@@ -38,7 +38,7 @@ export const battleShipSlice = createSlice({
             state.logs = action.payload
         }
     }
-})
+});
 
 export const { setPlayerOneName, setPlayerTwoName, setPlayerOneShips, setPlayerTwoShips, setPlayerOneHits, setPlayerTwoHits , setLogs } = battleShipSlice.actions;
 

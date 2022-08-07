@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
-import SelectionBoard from '../SelectionBoard'
 import './index.css'
+import SelectionBoard from '../SelectionBoard'
 import BattleField from '../BattleField'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPlayerOneName, setPlayerTwoName } from '../../Redux/slice'
@@ -9,14 +9,14 @@ import { setPlayerOneName, setPlayerTwoName } from '../../Redux/slice'
 
 const Landing = () => {
 
-    const { logs } = useSelector(state => state.battleShip); // for gamelog's log get the state from the store
+    const { logs } = useSelector(state => state.battleShip); // Get gamelogs from the store.
     const dispatch = useDispatch();
 
-    const [step, setStep] = useState(1);
-    const [playerOne, setPlayerOne] = useState(''); // state for player one name
-    const [playerTwo, setPlayerTwo] = useState('');  // state two player one name
+    const [step, setStep] = useState(1); // For step-by-step components.
+    const [playerOne, setPlayerOne] = useState(''); // State for first player name.
+    const [playerTwo, setPlayerTwo] = useState('');  // State for second player name.
 
-    const playerStorage = (key, value) => {   // to access player names with redux
+    const playerStorage = (key, value) => {   // Save player names to store.
         setStep(step + 1);
         if (key === 'playerOne') {
             dispatch(setPlayerOneName(value))
@@ -28,12 +28,12 @@ const Landing = () => {
     return (
         <div className='step-container'>
 
-            {/* First, two steps to choose player name */}
+            {/* First two steps to choose player names. */}
 
             {step === 1 &&
                 <>
-                    <h1>[Battleship]</h1>
-                    <h1>Please Enter For Player1 Name</h1>
+                    <h1>Welcome to Battleship!</h1>
+                    <h1>Please enter your name for the first player</h1>
                     <input type="text"
                         value={playerOne}
                         onKeyDown={(e) => e.key === 'Enter' && playerStorage('playerOne', playerOne)}
@@ -43,11 +43,11 @@ const Landing = () => {
 
                     {playerOne !== '' && <button onClick={() => playerStorage('playerOne', playerOne)}>
                         &#10132;</button>}
-                </>};
+                </>}
 
             {step === 2 &&
                 <>
-                    <h1>Please Enter For Player2 Name</h1>
+                    <h1>Please enter your name for the two player</h1>
                     <input type="text"
                         value={playerTwo}
                         onKeyDown={(e) => e.key === 'Enter' && playerStorage('playerTwo', playerTwo)}
@@ -58,46 +58,54 @@ const Landing = () => {
                     {playerTwo !== '' && <button onClick={() => playerStorage('playerTwo', playerTwo)}>
                         &#10132;</button>}
 
-                </>};
+                </>}
+
+            {/* Game rules. */}
 
             {step === 3 &&
                 <>
-                    <h1>We are ready!</h1>  <br></br>
+                    <h2 className='game-info'>
+                        First, players choose the positions that they would like their battleships to be on the Ship grids below. Once the second player has chosen ship positions, players push 'Start Game' button head up to the battle grids to fight.
+
+                        The Battle Grid identifies a miss with gray, a hit with green. You can not hit the same spot twice.
+
+                        Once a player sinks all of the opponent's ships, the game is over!</h2>
+                    <h1 style={{ margin: '25px 0' }}>We are ready!</h1>  <br></br>
                     <button onClick={() => setStep(step + 1)}>Start Game!
                     </button>
-                </>};
+                </>}
 
             {/* Fourth and fifth step is for the players to choose their ship. */}
 
             {step === 4 &&
-                <div className="step-four">
+                <div>
                     <h1>{playerOne}'s Selection Grid</h1>
                     <SelectionBoard playerKey={'playerOneShips'} step={step} setStep={setStep} />
                 </div>
-            };
+            }
 
             {step === 5 &&
-                <div className="step-five">
+                <div>
                     <h1>{playerTwo}'s Selection Grid</h1>
                     <SelectionBoard playerKey={'playerTwoShips'} step={step} setStep={setStep} />
                 </div>
-            };
+            }
 
-            {/* BattleShip Field */}
+            {/* BattleShip Field. */}
 
             {step === 6 &&
                 <BattleField step={step} setStep={setStep} />
-            };
+            }
 
-            {/* Winner loser and back to the start */}
+            {/* Winner loser and back to the start. */}
 
             {step === 7 &&
                 <>
                     <h1>{logs[logs.length - 2]}</h1>
                     <h1>{logs[logs.length - 1]}</h1>
-                    <button style={{ width: '75px', height: '75px' }} onClick={() => window.location.reload()}>Play Again</button>
+                    <button className='play-again-button' onClick={() => window.location.reload()}>Play Again</button>
                 </>
-            };
+            }
 
         </div>
     );

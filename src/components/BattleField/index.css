@@ -1,0 +1,8 @@
+.game-log {
+    overflow-x: auto;
+    width: 200px;
+    height: 175px;
+    margin: 15px auto;
+    background: white;
+    border-radius: 15px;
+}

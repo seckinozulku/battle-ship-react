@@ -6,7 +6,6 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     background: linear-gradient(to bottom right, #ffffff 0%, #666699 100%);
     background-repeat: no-repeat;
@@ -40,14 +39,13 @@ button {
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
-    
 }
 
-
-.step-four {
-    text-align: center;
+.game-info {
+    padding: 0 500px;
 }
 
-.step-five{
-    text-align: center;
+.play-again-button {
+    width: 75px;
+    height: 75px;
 }
