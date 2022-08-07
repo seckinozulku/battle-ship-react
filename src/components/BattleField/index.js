@@ -3,11 +3,11 @@ import BattleBoard from '../BattleBoard'
 import { useSelector , useDispatch } from 'react-redux'
 import { setLogs  } from '../../Redux/slice';
 
-const BattleField = () => {
+const BattleField = ({step , setStep}) => {
 
   const dispatch = useDispatch();
 
-  const { playerOneShips, playerTwoShips, playerOne, playerTwo, hits, logs  } = useSelector(state => state.battleShip)
+  const { playerOneShips, playerTwoShips, playerOne, playerTwo, logs  } = useSelector(state => state.battleShip)
 
   const [turn, setTurn] = useState(true)
 
@@ -19,20 +19,21 @@ const BattleField = () => {
     }
   }, [turn])
 
+ 
   return (
     <div>
 
       {turn &&
         <>
           <h1>{playerTwo} Hits Now!</h1>
-          <BattleBoard label={'playerTwoHits'} ships={playerOneShips} turn={turn} setTurn={setTurn} />
+          <BattleBoard  label={'playerTwoHits'} ships={playerOneShips} turn={turn} setTurn={setTurn} step={step } setStep={setStep}/>
         </>
       }
 
       {!turn &&
         <>
           <h1>{playerOne} Hits Now!</h1>
-          <BattleBoard label={'playerOneHits'} ships={playerTwoShips} turn={turn} setTurn={setTurn} />
+          <BattleBoard label={'playerOneHits'} ships={playerTwoShips} turn={turn} setTurn={setTurn} step={step } setStep={setStep} />
         </>
       }
       <h1>GameLog</h1>

@@ -5,7 +5,7 @@ import { setPlayerOneHits, setPlayerTwoHits , setLogs  } from '../../Redux/slice
 const ROWS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const COLUMNS = [1, 2, 3, 4, 5, 6, 7, 8];
 
-const BattleBoard = ({ ships, label, turn, setTurn }) => {
+const BattleBoard = ({ ships, label, turn, setTurn , step , setStep }) => {
     const dispatch = useDispatch();
 
     const { hits: selectedPlayerHits , logs , playerOne , playerTwo} = useSelector(state => state.battleShip)
@@ -14,14 +14,26 @@ const BattleBoard = ({ ships, label, turn, setTurn }) => {
     const [isActive , setIsActive] = useState(true)
 
     useEffect(() => {
+        const hitsValues = Object.values(hits)
+        const successfullHits = hitsValues.filter((hit) => hit === true).length
         if (label === 'playerOneHits') {
             dispatch(setPlayerOneHits(hits))
+            if (successfullHits === 17) {
+                dispatch(setLogs([...logs, `${playerOne} wins!` , `${playerTwo} lose!`]))
+                setIsActive(false)
+                setStep(step + 1)
+            } 
         } else {
             dispatch(setPlayerTwoHits(hits))
+            if (successfullHits === 17) {
+                dispatch(setLogs([...logs, `${playerTwo} wins!` ,  `${playerOne} lose!`]))
+                setIsActive(false)
+                setStep(step + 1)
+            } 
         }
+        
     }, [hits])
-
-
+    
 
     const handleHit = (coord) => {
 
