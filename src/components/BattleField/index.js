@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , useRef } from 'react'
 import BattleBoard from '../BattleBoard'
 import { useSelector , useDispatch } from 'react-redux'
 import { setLogs  } from '../../Redux/slice'
@@ -7,6 +7,8 @@ import './index.css'
 const BattleField = ({step , setStep}) => {
 
   const dispatch = useDispatch();
+  const logsRef = useRef(null)
+
 
   const { playerOneShips, playerTwoShips, playerOne, playerTwo, logs  } = useSelector(state => state.battleShip);
 
@@ -20,6 +22,11 @@ const BattleField = ({step , setStep}) => {
       dispatch(setLogs([...logs, `${playerOne}'s turn`]));
     }
   }, [turn]);
+
+  // Scroll bottom when logs change.
+  useEffect(() => {
+    logsRef.current?.scrollIntoView({ behavior: "smooth" })
+  },[logs])
 
  
   return (
@@ -45,8 +52,8 @@ const BattleField = ({step , setStep}) => {
             return <p key={index}>{`${index}-) ${log}`}</p>
           })
         }
+        <div ref={logsRef}/>
       </div>
-
     </div>
   );
 };

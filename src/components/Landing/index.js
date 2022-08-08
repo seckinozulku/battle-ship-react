@@ -70,7 +70,7 @@ const Landing = () => {
                         The Battle Grid identifies a miss with gray, a hit with green. You can not hit the same spot twice.
 
                         Once a player sinks all of the opponent's ships, the game is over!</h2>
-                    <h1 style={{ margin: '25px 0' }}>We are ready!</h1>  <br></br>
+                    <h1 className='start-text'>We are ready!</h1>  <br></br>
                     <button onClick={() => setStep(step + 1)}>Start Game!
                     </button>
                 </>}
