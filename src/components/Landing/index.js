@@ -27,7 +27,7 @@ const Landing = () => {
     // I wanted to design step-by-step on a single page, so I made such a plan.
     return (
         <div className='step-container'>
-
+            <div>
             {/* First two steps to choose player names. */}
 
             {step === 1 &&
@@ -106,7 +106,7 @@ const Landing = () => {
                     <button className='play-again-button' onClick={() => window.location.reload()}>Play Again</button>
                 </>
             }
-
+</div>
         </div>
     );
 };

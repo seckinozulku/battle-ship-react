@@ -1,3 +1,11 @@
+## Live Demo:
+https://cool-pavlova-b81c2f.netlify.app/
+
+## Gameplay:
+
+First, players choose the positions that they would like their battleships to be on the Ship grids below. Once the second player has chosen ship positions, players push 'Start Game' button head up to the battle grids to fight. The Battle Grid identifies a miss with gray, a hit with green. You can not hit the same spot twice. Once a player sinks all of the opponent's ships, the game is over.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
